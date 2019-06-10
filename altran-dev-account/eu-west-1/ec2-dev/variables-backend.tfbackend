@@ -1,0 +1,5 @@
+region = "eu-west-1"
+bucket = "altran-development-eu-west-1-tfstate"
+dynamodb_table = "altran-development-eu-west-1-tfdbstate"
+key    = "altran-web/eu-west-1/ec2-dev"
+  
