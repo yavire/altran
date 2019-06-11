@@ -2,7 +2,7 @@
 
 Proceso de selección ALTRAN
 
-##¿Que contiene este repositorio? ##
+## ¿Que contiene este repositorio?
 
 Este repositorio contiene unos scripts de terraform que despliegan una aplicación  [Spring Boot de ejemplo](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-hateoas) sobre una cuenta de AWS. Para lograr esto, se ha programado la construcción de lo siguiente:
 
@@ -32,23 +32,46 @@ Este repositorio contiene unos scripts de terraform que despliegan una aplicaci�
 cd $HOME/altran-global-account/eu-west-1/s3-for-development
 ```
 
-`terraform init -backend-config="variables-backend.tfbackend"`
+ `terraform init -backend-config="variables-backend.tfbackend"`
 
-`terrafom apply -var-file="user.tfvars"`
-
-
-![Optional Text](/images/s3-state.PNG)
+ `terrafom apply -var-file="user.tfvars"`
 
 
-```
-Give the example
-```
+![Optional Text](/images/s3-state.png)
 
-And repeat
+
+
+### Construcción de la VPC
 
 ```
-until finished
+cd $HOME/altran-dev-account/eu-west-1/vpc-dev
 ```
+
+ `terraform init -backend-config="variables-backend.tfbackend"`
+
+ `terrafom apply -var-file="user.tfvars"`
+
+
+![Optional Text](/images/vpc-subnets.png)
+
+
+### Construcción de los servidores EC2
+
+```
+cd $HOME/altran-dev-account/eu-west-1/ec2-dev
+```
+
+ `terraform init -backend-config="variables-backend.tfbackend"`
+
+ `terrafom apply -var-file="user.tfvars"`
+
+
+![Optional Text](/images/ec2.png)
+
+
+## Resultados
+
+### Salida de terraform
 
 ```
 Apply complete! Resources: 14 added, 0 changed, 0 destroyed.
@@ -64,11 +87,12 @@ public_ip_loadbalancer = 34.242.152.153
 vpc_id = vpc-04360755ffbf47c03
 ```
 
+### Resultado en el navegador
 
-## Authors
+![Optional Text](/images/resultado.png)
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+## Autor
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Fernando Oliveros** 
 
 
