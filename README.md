@@ -2,20 +2,42 @@
 
 Proceso de selección ALTRAN
 
+##¿Que contiene este repositorio? ##
 
-### Prerequisites
+Este repositorio contiene unos scripts de terraform que despliegan una aplicación  [Spring Boot de ejemplo](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-hateoas) sobre una cuenta de AWS. Para lograr esto, se ha programado la construcción de lo siguiente:
+
+* Un bucket S3 donde se guardará los estados de las ejecuciones de Terrafom
+* Construye una VPC con una subred pública y dos subredes privadas.
+* Construye una servidor EC2 en la subred pública, y se desplegará un nginx que hara las veces de balanceador. El punto de acceso será el puerto 443. El nginx se levantará dentro de un contenedor Docker. Este servidor irá en un grupo de seguridad con el puerto 443 y el 22 abierto.
+* Construye dos servidores EC2, donde cada uno irá en una de las subredes privadas. En estos servidores se desplegará la aplicación de ejemplo, que se levantará en un contenedor docker, con el puerto 9000. Iran en un grupo de seguridad que solo aceptará peticiones del grupo de segurodad del balanceador, y solo por los puertos 9000 y 22.
+* Para desplegar la aplicación, y a manera de demostración, hemos optado por compilar en vuelo la aplicación, levantando un docker con maven, que dejará el fichero jar en un directorio que utilizaremos en un docker compose que construirá la imagén que levantará la aplicación.
+
+
+### Pre-requisitos
 
 - Cuenta de AWS
 - Terraform instalado en el servidor donde se clone el proyecto
 
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+## Arquitectura
 
 ![Optional Text](/images/arquitectura.png)
+
+
+## Despliegue
+
+### Construcción del S3
+
+```
+cd $HOME/altran-global-account/eu-west-1/s3-for-development
+```
+
+`terraform init -backend-config="variables-backend.tfbackend"`
+
+`terrafom apply -var-file="user.tfvars"`
+
+
+![Optional Text](/images/s3-state.PNG)
 
 
 ```
@@ -28,45 +50,20 @@ And repeat
 until finished
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
 ```
-Give an example
-```
+Apply complete! Resources: 14 added, 0 changed, 0 destroyed.
+Releasing state lock. This may take a few moments...
 
-### And coding style tests
+Outputs:
 
-Explain what these tests test and why
-
-```
-Give an example
+private_ip_loadbalancer = 10.0.0.196
+private_ip_springboot1 = 10.0.0.145
+private_ip_springboot2 = 10.0.0.145
+private_key = mykey.pem
+public_ip_loadbalancer = 34.242.152.153
+vpc_id = vpc-04360755ffbf47c03
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
