@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: altran-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: altran-springboot
+    spec:
+      - name: altran-demo
+        image: yavire/altran-demo
+        ports:
+        - name: spring-boot-port
+          containerPort: 9000

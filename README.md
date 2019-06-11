@@ -1,7 +1,5 @@
 # Altran KAS Devops
 
-Proceso de selección ALTRAN
-
 ## ¿Que contiene este repositorio?
 
 Este repositorio contiene unos scripts de terraform que despliegan una aplicación  [Spring Boot de ejemplo](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-hateoas) sobre una cuenta de AWS. Para lograr esto, se ha programado la construcción de lo siguiente:
@@ -89,7 +87,19 @@ vpc_id = vpc-04360755ffbf47c03
 
 ### Resultado en el navegador
 
+
 ![Optional Text](/images/resultado.png)
+
+Nota: todo la infraestructura fue destruida a través del comando
+
+`terrafom apply -var-file="user.tfvars"`
+
+
+### FICHEROS DE DESPLIGUE KUBERNETES
+
+En la carpeta kubernetes-files, dejamos los ficheros para desplegar la aplicación. Para esta ocasión no he creado en AWS un EKS para probar la aplicación, me ha faltado un poquito de tiempo. 
+
+
 
 ## Autor
 
