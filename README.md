@@ -2,13 +2,13 @@
 
 ## ¿Que contiene este repositorio?
 
-Este repositorio contiene unos scripts de terraform que despliegan una aplicación  [Spring Boot de ejemplo](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-hateoas) sobre una cuenta de AWS. Para lograr esto, se ha programado la construcción de lo siguiente:
+Este repositorio contiene unos scripts de terraform, los cuales despliegan una aplicación  [Spring Boot de ejemplo](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-hateoas) sobre una cuenta de AWS. Para lograr esto, se ha automatizado la construcción de lo siguiente:
 
-* Un bucket S3 donde se guardará los estados de las ejecuciones de Terrafom
+* Un bucket S3 donde se guardarán los estados de las ejecuciones de Terraform
 * Construye una VPC con una subred pública y dos subredes privadas.
-* Construye una servidor EC2 en la subred pública, y se desplegará un nginx que hara las veces de balanceador. El punto de acceso será el puerto 443. El nginx se levantará dentro de un contenedor Docker. Este servidor irá en un grupo de seguridad con el puerto 443 y el 22 abierto.
-* Construye dos servidores EC2, donde cada uno irá en una de las subredes privadas. En estos servidores se desplegará la aplicación de ejemplo, que se levantará en un contenedor docker, con el puerto 9000. Iran en un grupo de seguridad que solo aceptará peticiones del grupo de segurodad del balanceador, y solo por los puertos 9000 y 22.
-* Para desplegar la aplicación, y a manera de demostración, hemos optado por compilar en vuelo la aplicación, levantando un docker con maven, que dejará el fichero jar en un directorio que utilizaremos en un docker compose que construirá la imagén que levantará la aplicación.
+* Construye un servidor EC2 en la subred pública, y se desplegará un nginx que hara las veces de balanceador. El punto de acceso será el puerto 443, con certificado autofirmado. El nginx se levantará dentro de un contenedor Docker. Este servidor irá en un grupo de seguridad con el puerto 443 y el 22 abierto.
+* Construye dos servidores EC2, donde cada uno irá en una de las subredes privadas. En estos servidores se desplegará la aplicación de ejemplo, que se levantará en un contenedor docker, en el puerto 9000. Se ubicarán en un grupo de seguridad que solo aceptará peticiones del grupo de seguridad del balanceador, y solo por los puertos 9000 y 22.
+* Para desplegar la aplicación, y a manera de demostración, hemos optado por compilar en vuelo la aplicación, levantando un docker con maven, que dejará el fichero jar en un directorio que utilizaremos en un docker compose que construirá la imagén que levantará la aplicación. Todo esto en el momento de la creación del servidor EC2.
 
 
 ### Pre-requisitos
@@ -69,7 +69,7 @@ cd $HOME/altran-dev-account/eu-west-1/ec2-dev
 
 ## Resultados
 
-### Salida de terraform
+### Salida de Terraform
 
 ```
 Apply complete! Resources: 14 added, 0 changed, 0 destroyed.
